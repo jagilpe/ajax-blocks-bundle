@@ -1,0 +1,34 @@
+{
+	"name" : "jagilpe/ajax-blocks-bundle",
+	"type" : "symfony-bundle",
+	"description" : "Symfony Bundle for rendering ajax updateable blocks",
+	"keywords" : [
+		"Ajax", "Block"
+	],
+	"homepage" : "https://github.com/jagilpe/ajax-blocks-bundle",
+	"license" : "MIT",
+	"authors" : [
+		{
+			"name" : "Javier Gil",
+			"email" : "javier@gilpereda.com"
+		}
+	],
+	"require" : {
+		"php" : ">=5.6.0",
+		"symfony/framework-bundle" : ">=2.3"
+	},
+	"require-dev" : {
+		"symfony/yaml" : ">=2.3",
+		"phpunit/phpunit": "^5.7"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Jagilpe\\AjaxBlocksBundle\\" : ""
+		}
+	},
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "dev-master"
+		}
+	}
+}
