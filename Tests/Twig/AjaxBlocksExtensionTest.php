@@ -58,4 +58,37 @@ class AjaxBundleExtensionTest extends TestCase
 
         $extension->renderAjaxBlock($twigEnvironment, 'TestingBundle:Test:block');
     }
+
+    public function testPassesTheBlockParameters()
+    {
+        $extension = new AjaxBlocksExtension();
+
+        $twigEnvironment = $this->getMockBuilder(\Twig_Environment::class)
+            ->setMethods(['render'])
+            ->getMock();
+
+        $expectedVariables = array(
+            'controllerName' => 'TestingBundle:Test:block',
+            'controllerParams' => array('param1' => 'param1', 'param2' => 'param2')
+        );
+
+        $twigEnvironment->expects($this->once())
+            ->method('render')
+            ->with(
+                'AjaxBlocksBundle::ajax_block.html.twig',
+                $this->callback(function($variables) use ($expectedVariables) {
+                    $matches = true;
+                    foreach ($expectedVariables as $key => $value) {
+                        if (!isset($variables[$key]) || $variables[$key] !== $value) {
+                            return false;
+                        }
+                    }
+                    return $matches;
+                }));
+
+        $extension->renderAjaxBlock(
+            $twigEnvironment,
+            'TestingBundle:Test:block',
+            array('param1' => 'param1', 'param2' => 'param2'));
+    }
 }

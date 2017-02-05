@@ -40,15 +40,17 @@ class AjaxBlocksExtension extends \Twig_Extension
      * Renders the ajax block
      *
      * @param \Twig_Environment $environment
-     * @param string $controller
+     * @param string $controllerName
+     * @param array $controllerParams
      *
      * @return string
      */
-    public function renderAjaxBlock(\Twig_Environment $environment, $controller)
+    public function renderAjaxBlock(\Twig_Environment $environment, $controllerName, array $controllerParams = array())
     {
         $variables = array(
             'test' => 'test',
-            'controllerName' => $controller,
+            'controllerName' => $controllerName,
+            'controllerParams' => $controllerParams
         );
 
         $template = 'AjaxBlocksBundle::ajax_block.html.twig';

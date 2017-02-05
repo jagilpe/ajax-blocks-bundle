@@ -10,6 +10,8 @@
 
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional;
 
+use Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller\DefaultController;
+
 /**
  * Ajax Blocks functional tests
  *
@@ -21,7 +23,7 @@ class AjaxBlocksTest extends WebTestCase
     {
         $client = $this->createClient();
 
-        $crawler = $client->request('GET', '/index/block1');
+        $crawler = $client->request('GET', '/index/'.DefaultController::SIMPLE_BLOCK);
 
         $blockContainer = $crawler->filter('.jgp-ajax-block')->first();
         $blockContent = trim($blockContainer->text());
@@ -29,14 +31,16 @@ class AjaxBlocksTest extends WebTestCase
         $this->assertEquals('Testing block', $blockContent);
     }
 
-    public function testRendersTheContentOfAnotherBlock()
+    public function testRendersABlockWithParameters()
     {
         $client = $this->createClient();
 
-        $crawler = $client->request('GET', '/index/block2');
-        $blockContainer = $crawler->filter('.jgp-ajax-block')->first();
-        $blockContent = trim($blockContainer->text());
+        $crawler = $client->request('GET', '/index/block-with-params');
 
-        $this->assertEquals('Testing block 2', $blockContent);
+        $param1 = trim($crawler->filter('.jgp-ajax-block #param1')->first()->html());
+        $param2 = trim($crawler->filter('.jgp-ajax-block #param2')->first()->html());
+
+        $this->assertEquals('first parameter', $param1);
+        $this->assertEquals('second parameter', $param2);
     }
 }
