@@ -1,0 +1,3 @@
+index:
+    path:     /index
+    defaults: { _controller: TestBundle:Default:index }

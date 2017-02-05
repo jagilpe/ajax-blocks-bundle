@@ -1,34 +1,55 @@
 {
-	"name" : "jagilpe/ajax-blocks-bundle",
-	"type" : "symfony-bundle",
-	"description" : "Symfony Bundle for rendering ajax updateable blocks",
-	"keywords" : [
-		"Ajax", "Block"
-	],
-	"homepage" : "https://github.com/jagilpe/ajax-blocks-bundle",
-	"license" : "MIT",
-	"authors" : [
-		{
-			"name" : "Javier Gil",
-			"email" : "javier@gilpereda.com"
-		}
-	],
-	"require" : {
-		"php" : ">=5.6.0",
-		"symfony/framework-bundle" : ">=2.3"
-	},
-	"require-dev" : {
-		"symfony/yaml" : ">=2.3",
-		"phpunit/phpunit": "^5.7"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"Jagilpe\\AjaxBlocksBundle\\" : ""
-		}
-	},
-	"extra" : {
-		"branch-alias" : {
-			"dev-master" : "dev-master"
-		}
-	}
+    "name": "jagilpe/ajax-blocks-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony Bundle for rendering ajax updateable blocks",
+    "keywords": [
+        "Ajax",
+        "Block"
+    ],
+    "homepage": "https://github.com/jagilpe/ajax-blocks-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Javier Gil",
+            "email": "javier@gilpereda.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "symfony/http-kernel": "~3.2"
+    },
+    "require-dev": {
+        "symfony/asset": "~2.8|~3.0",
+        "symfony/browser-kit": "~2.8|~3.0",
+        "symfony/console": "~2.8|~3.0",
+        "symfony/css-selector": "~2.8|~3.0",
+        "symfony/dom-crawler": "~2.8|~3.0",
+        "symfony/form": "~2.8|~3.0",
+        "symfony/framework-bundle": "~3.1",
+        "symfony/http-foundation": "~2.8|~3.0",
+        "symfony/security-acl": "~2.8|~3.0",
+        "symfony/templating": "~2.8|~3.0",
+        "symfony/twig-bundle": "~2.8|~3.0",
+        "symfony/twig-bridge": "~2.8|~3.0",
+        "symfony/process": "~2.8|~3.0",
+        "symfony/validator": "~2.8|~3.0",
+        "symfony/var-dumper": "~3.2",
+        "symfony/yaml": "~2.8|~3.0",
+        "symfony/expression-language": "~2.8|~3.0",
+        "twig/twig": "~1.28|~2.0",
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jagilpe\\AjaxBlocksBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "dev-master"
+        }
+    }
 }
