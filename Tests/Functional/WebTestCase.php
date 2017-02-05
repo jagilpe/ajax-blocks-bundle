@@ -11,6 +11,8 @@
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  *  Base WebTestCase for the functional testing
@@ -42,6 +44,30 @@ class WebTestCase extends BaseWebTestCase
         require_once __DIR__.'/app/AppKernel.php';
 
         return 'Jagilpe\AjaxBlocksBundle\Tests\Functional\app\AppKernel';
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->deleteTempDirs();
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->deleteTempDirs();
+    }
+
+    protected function deleteTempDirs()
+    {
+        if (!file_exists($dir = sys_get_temp_dir().'/'.Kernel::VERSION)) {
+            return;
+        }
+
+        $fs = new Filesystem();
+        $fs->remove($dir);
     }
 
 }

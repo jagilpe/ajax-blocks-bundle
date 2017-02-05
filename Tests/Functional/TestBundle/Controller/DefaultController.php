@@ -10,21 +10,32 @@
 
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Default controller for the functional tests
  *
  * @author Javier Gil Pereda <javier@gilpereda.com>
  */
-class DefaultController implements ContainerAwareInterface
+class DefaultController extends Controller
 {
-    use ContainerAwareTrait;
-
-    public function indexAction()
+    public function indexAction($block)
     {
-        return new Response('testing');
+        $variables = array(
+            'controller' => 'TestBundle:Default:'.$block
+        );
+
+        return $this->render('TestBundle:Default:index.html.twig', $variables);
+    }
+
+    public function block1Action()
+    {
+        return new Response('Testing block');
+    }
+
+    public function block2Action()
+    {
+        return new Response('Testing block 2');
     }
 }

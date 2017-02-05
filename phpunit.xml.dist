@@ -11,7 +11,10 @@
          syntaxCheck="false"
          bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name="AjaxBlocksBundle Test Suite">
+        <testsuite name="all_tests">
+            <directory>./Tests/</directory>
+        </testsuite>
+        <testsuite name="unit_tests">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>

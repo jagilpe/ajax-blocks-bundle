@@ -3,8 +3,17 @@ framework:
     router:        { resource: "%kernel.root_dir%/config/routing.yml" }
     test: ~
     default_locale: en
+    templating:
+        engines: ['twig']
     session:
         storage_id:     session.storage.mock_file
+    profiler:
+        collect: false
 
 services:
     logger: { class: Psr\Log\NullLogger }
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"

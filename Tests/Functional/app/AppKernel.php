@@ -39,7 +39,8 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return sys_get_temp_dir().'/'.Kernel::VERSION.'/cache/'.$this->environment;
+        $cacheDir = sys_get_temp_dir().'/'.Kernel::VERSION.'/cache/'.$this->environment;
+        return $cacheDir;
     }
 
     public function getLogDir()

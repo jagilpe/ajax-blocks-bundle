@@ -1,0 +1,7 @@
+services:
+    # Twig extension
+    jgp_ajax_blocks.twig_extension:
+        class: Jagilpe\AjaxBlocksBundle\Twig\AjaxBlocksExtension
+        public: true
+        tags:
+            - { name: twig.extension }
