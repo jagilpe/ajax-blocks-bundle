@@ -43,9 +43,50 @@ class AjaxBlocksTest extends WebTestCase
         $this->assertEquals('second parameter', $param2);
     }
 
+    public function testRendersTheAjaxCallbackUrl()
+    {
+        $params = DefaultController::$params[DefaultController::BLOCK_WITH_PARAMS];
+
+        $client = $this->createClient();
+
+        $blockContainer = $this->getRenderedBlockContainer($client, '/index/'.DefaultController::BLOCK_WITH_PARAMS);
+
+        $ajaxCallbackUrl = $blockContainer->attr('data-src');
+
+        list($url, $queryParams) = $this->explodeUrl($ajaxCallbackUrl);
+        list(, $controller) = explode('/jgp-ajax-blocks/ajax-block/', $url);
+
+        $this->assertNotEmpty($ajaxCallbackUrl);
+        $this->assertEquals('TestBundle:Default:blockWithParams', $controller);
+        foreach ($params as $param => $value) {
+            $this->assertEquals($queryParams[$param], $value);
+        }
+
+    }
+
     private function getRenderedBlockContainer(Client $client, $url)
     {
         $crawler = $client->request('GET', $url);
         return $crawler->filter('[data-target="jgp-ajax-block"]')->first();
+    }
+
+    private function explodeUrl($url)
+    {
+        $explodedUrl =  explode('?', $url);
+        $url = $explodedUrl[0];
+        $queryString = isset($explodedUrl[1]) ? $explodedUrl[1] : '';
+        $queryParamsRaw = explode('&', $queryString);
+
+        $queryParams = array();
+        if ($queryParams !== "") {
+            foreach ($queryParamsRaw as $queryParamRaw) {
+                $explodedQueryParam = explode('=', $queryParamRaw);
+                $param = $explodedQueryParam[0];
+                $value = isset($explodedQueryParam[1]) ? $explodedQueryParam[1] : null;
+                $queryParams[$param] = urldecode($value);
+            }
+        }
+
+        return array($url, $queryParams);
     }
 }

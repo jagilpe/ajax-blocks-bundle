@@ -69,26 +69,53 @@ class AjaxBundleExtensionTest extends TestCase
 
         $expectedVariables = array(
             'controllerName' => 'TestingBundle:Test:block',
-            'controllerParams' => array('param1' => 'param1', 'param2' => 'param2')
+            'controllerParams' => array('param1' => 'parameter 1', 'param2' => 'parameter 2'),
+            'routeName' => 'jgp_ajax_block',
+            'routeParams' => array(
+                '_ajaxController' => 'TestingBundle:Test:block',
+                'param1' => 'parameter 1',
+                'param2' => 'parameter 2',
+            ),
         );
 
         $twigEnvironment->expects($this->once())
             ->method('render')
             ->with(
                 'AjaxBlocksBundle::ajax_block.html.twig',
-                $this->callback(function($variables) use ($expectedVariables) {
-                    $matches = true;
-                    foreach ($expectedVariables as $key => $value) {
-                        if (!isset($variables[$key]) || $variables[$key] !== $value) {
-                            return false;
-                        }
-                    }
-                    return $matches;
-                }));
+                $this->callback($this->getArrayMatcher($expectedVariables)));
 
         $extension->renderAjaxBlock(
             $twigEnvironment,
             'TestingBundle:Test:block',
-            array('param1' => 'param1', 'param2' => 'param2'));
+            array('param1' => 'parameter 1', 'param2' => 'parameter 2'));
     }
+
+    private function getArrayMatcher($expectedValues)
+    {
+        return function($values) use ($expectedValues) {
+            $matches = true;
+
+            foreach ($expectedValues as $key => $value) {
+                if (!isset($values[$key])) {
+                    return false;
+                }
+
+                if (is_array($value)) {
+                    foreach ($value as $subkey => $subvalue) {
+                        if (!isset($values[$key][$subkey]) || $values[$key][$subkey] !== $subvalue) {
+                            return false;
+                        }
+                    }
+                } else {
+                    if ($values[$key] !== $value) {
+                        return false;
+                    }
+                }
+
+            }
+
+            return $matches;
+        };
+    }
+
 }

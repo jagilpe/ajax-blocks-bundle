@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ This file is part of AjaxBlocksBundle package.
+  ~
+  ~ (c) Copyright Javier Gil Pereda <javier@gilpereda.com>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+  -->
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="jgp_ajax_block" path="/ajax-block/{_ajaxController}" methods="GET">
+        <default key="_controller">AjaxBlocksBundle:AjaxBlock:getAjaxBlock</default>
+    </route>
+
+</routes>

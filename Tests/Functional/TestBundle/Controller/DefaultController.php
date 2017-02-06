@@ -23,6 +23,10 @@ class DefaultController extends Controller
     const SIMPLE_BLOCK = 'simple-block';
     const BLOCK_WITH_PARAMS = 'block-with-params';
 
+    public static $params = array(
+        self::BLOCK_WITH_PARAMS =>array('param1' => 'first parameter', 'param2' => 'second parameter')
+    );
+
     public function indexAction($block)
     {
         $variables = $this->getVariables($block);
@@ -55,7 +59,7 @@ class DefaultController extends Controller
             case self::BLOCK_WITH_PARAMS:
                 $variables = array(
                     'controllerName' => $controllerName.'blockWithParams',
-                    'controllerParams' => array('param1' => 'first parameter', 'param2' => 'second parameter'),
+                    'controllerParams' => self::$params[self::BLOCK_WITH_PARAMS],
                 );
                 break;
             default:
