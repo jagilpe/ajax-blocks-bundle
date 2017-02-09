@@ -1,0 +1,30 @@
+{
+  "name": "ajax-blocks-bundle",
+  "version": "0.0.1",
+  "description": "Symfony Bundle for rendering blocks reloadable with Ajax calls",
+  "main": "Resources/public/js/ajax-blocks.js",
+  "scripts": {
+    "test": "karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagilpe/ajax-blocks-bundle.git"
+  },
+  "author": "Javier Gil Pereda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jagilpe/ajax-blocks-bundle/issues"
+  },
+  "homepage": "https://github.com/jagilpe/ajax-blocks-bundle#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "jasmine-spec-reporter": "^3.2.0",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.1.0"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}

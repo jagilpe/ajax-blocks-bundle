@@ -5,3 +5,4 @@ nbproject
 phpunit.xml
 vendor
 composer.lock
+node_modules
