@@ -11,4 +11,4 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-dist
 
-script: make sniff test
+script: make test
