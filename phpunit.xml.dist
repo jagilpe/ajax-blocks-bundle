@@ -16,11 +16,12 @@
         </testsuite>
         <testsuite name="unit_tests">
             <directory>./Tests/</directory>
+            <exclude>./Tests/Functional</exclude>
         </testsuite>
     </testsuites>
 
     <filter>
-        <whitelist>
+        <whitelist addUncoveredFilesFromWhitelist="true">
             <directory>./</directory>
             <exclude>
                 <directory>./Resources</directory>
