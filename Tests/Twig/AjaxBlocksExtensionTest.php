@@ -9,6 +9,7 @@
  */
 
 namespace Jagilpe\AjaxBlocksBundle\Tests\Twig;
+
 use Jagilpe\AjaxBlocksBundle\Twig\AjaxBlocksExtension;
 use PHPUnit\Framework\TestCase;
 
@@ -34,9 +35,7 @@ class AjaxBundleExtensionTest extends TestCase
     {
         $extension = new AjaxBlocksExtension();
 
-        $twigEnvironment = $this->getMockBuilder(\Twig_Environment::class)
-            ->setMethods(['render'])
-            ->getMock();
+        $twigEnvironment = $this->createMock(\Twig_Environment::class);
 
         $expectedVariables = array(
             'controllerName' => 'TestingBundle:Test:block'
@@ -63,9 +62,7 @@ class AjaxBundleExtensionTest extends TestCase
     {
         $extension = new AjaxBlocksExtension();
 
-        $twigEnvironment = $this->getMockBuilder(\Twig_Environment::class)
-            ->setMethods(['render'])
-            ->getMock();
+        $twigEnvironment = $this->createMock(\Twig_Environment::class);
 
         $expectedVariables = array(
             'controllerName' => 'TestingBundle:Test:block',
@@ -90,6 +87,13 @@ class AjaxBundleExtensionTest extends TestCase
             array('param1' => 'parameter 1', 'param2' => 'parameter 2'));
     }
 
+    /**
+     * Returns a Closure that checks that all the values of the expected array and
+     * their first level children are present in the actual array and have the same values
+     *
+     * @param $expectedValues
+     * @return \Closure
+     */
     private function getArrayMatcher($expectedValues)
     {
         return function($values) use ($expectedValues) {
