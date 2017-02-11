@@ -11,4 +11,8 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-dist
 
-script: make test
+script:
+    - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)

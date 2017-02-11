@@ -3,4 +3,4 @@ vendor/autoload.php:
 
 .PHONY: test
 test: vendor/autoload.php
-	vendor/bin/phpunit --verbose
+	vendor/bin/phpunit --coverage-clover=coverage.xml
