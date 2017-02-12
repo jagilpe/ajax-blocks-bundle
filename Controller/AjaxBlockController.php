@@ -12,6 +12,7 @@ namespace Jagilpe\AjaxBlocksBundle\Controller;
 
 use Jagilpe\AjaxBlocksBundle\Exception\AjaxBlocksErrorCodes;
 use Jagilpe\AjaxBlocksBundle\Exception\AjaxBlocksException;
+use ReflectionParameter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,9 +74,36 @@ class AjaxBlockController extends Controller
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws AjaxBlocksException
      */
     private function getControllerParams(Request $request, $controllerString)
+    {
+        $query = $request->query->all();
+        $methodParameters = $this->getControllerParameters($controllerString);
+
+        $parameters = array();
+        foreach ($methodParameters as $methodParameter) {
+            $parameterName = $methodParameter->getName();
+            if ('request' === $parameterName) continue;
+
+            if (isset($query[$parameterName])) {
+                $parameters[$parameterName] = $query[$parameterName];
+            }
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Get the parameters for the requested controller
+     *
+     * @param $controllerString
+     *
+     * @return ReflectionParameter[]
+     *
+     * @throws AjaxBlocksException
+     */
+    private function getControllerParameters($controllerString)
     {
         $controllerInfo = explode(':', $controllerString);
 
@@ -118,9 +146,6 @@ class AjaxBlockController extends Controller
         }
 
         $controller = $reflectionClass->getMethod($controllerMethod);
-
-        $query = $request->query->all();
-        $methodParameters = $controller->getParameters();
         if (!$controller->isPublic()) {
             throw new AjaxBlocksException(
                 "Method \"$controllerMethod\" of class \"$className\" is not public or is not callable.",
@@ -128,16 +153,7 @@ class AjaxBlockController extends Controller
             );
         }
 
-        $parameters = array();
-        foreach ($methodParameters as $methodParameter) {
-            $parameterName = $methodParameter->getName();
-            if ('request' === $parameterName) continue;
-
-            if (isset($query[$parameterName])) {
-                $parameters[$parameterName] = $query[$parameterName];
-            }
-        }
-
-        return $parameters;
+        return $controller->getParameters();
     }
+
 }
