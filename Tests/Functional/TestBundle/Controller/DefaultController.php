@@ -11,6 +11,7 @@
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -48,6 +49,28 @@ class DefaultController extends Controller
     {
         $html = "<span id=\"param1\">$param1</span>";
         $html .= "<span id=\"param2\">$param2</span>";
+        return new Response($html);
+    }
+
+    public function blockWithQueryParamsAction(Request $request)
+    {
+        $param1 = $request->query->get('param1');
+        $param2 = $request->query->get('param2');
+
+        $html = "<span id=\"param1\">$param1</span>";
+        $html .= "<span id=\"param2\">$param2</span>";
+        return new Response($html);
+    }
+
+    public function blockWithUrlAndQueryParamsAction(Request $request, $param1, $param2)
+    {
+        $query1 = $request->query->get('query1');
+        $query2 = $request->query->get('query2');
+
+        $html = "<span id=\"param1\">$param1</span>";
+        $html .= "<span id=\"param2\">$param2</span>";
+        $html .= "<span id=\"query1\">$query1</span>";
+        $html .= "<span id=\"query2\">$query2</span>";
         return new Response($html);
     }
 

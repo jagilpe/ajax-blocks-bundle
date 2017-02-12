@@ -29,7 +29,7 @@ class AjaxCallbacksTest extends WebTestCase
         $this->assertEquals('Testing block', $responseContent->block);
     }
 
-    public function testReturnsABlockWithParams()
+    public function testReturnsABlockWithUrlParams()
     {
         $blockController = 'TestBundle:Default:blockWithParams';
         $params = array(
@@ -39,6 +39,42 @@ class AjaxCallbacksTest extends WebTestCase
 
         $expectedBlock = '<span id="param1">Parameter 1</span>';
         $expectedBlock .= '<span id="param2">Parameter 2</span>';
+
+        $responseContent = $this->getResponseContent($blockController, $params);
+
+        $this->assertEquals($expectedBlock, $responseContent->block);
+    }
+
+    public function testReturnsABlockWithQueryParams()
+    {
+        $blockController = 'TestBundle:Default:blockWithQueryParams';
+        $params = array(
+            'param1' => 'Parameter 1',
+            'param2' => 'Parameter 2',
+        );
+
+        $expectedBlock = '<span id="param1">Parameter 1</span>';
+        $expectedBlock .= '<span id="param2">Parameter 2</span>';
+
+        $responseContent = $this->getResponseContent($blockController, $params);
+
+        $this->assertEquals($expectedBlock, $responseContent->block);
+    }
+
+    public function testReturnsABlockWithUrlAndQueryParams()
+    {
+        $blockController = 'TestBundle:Default:blockWithUrlAndQueryParams';
+        $params = array(
+            'param1' => 'Parameter 1',
+            'param2' => 'Parameter 2',
+            'query1' => 'Query parameter 1',
+            'query2' => 'Query parameter 2',
+        );
+
+        $expectedBlock = '<span id="param1">Parameter 1</span>';
+        $expectedBlock .= '<span id="param2">Parameter 2</span>';
+        $expectedBlock .= '<span id="query1">Query parameter 1</span>';
+        $expectedBlock .= '<span id="query2">Query parameter 2</span>';
 
         $responseContent = $this->getResponseContent($blockController, $params);
 

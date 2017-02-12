@@ -38,8 +38,8 @@ class AjaxBlockController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         try {
-            $controllerParams = $this->getControllerParams($request, $_ajaxController);
-            $controllerResponse = $this->forward($_ajaxController, $controllerParams);
+            list($controllerParams, $controllerQuery) = $this->getControllerParams($request, $_ajaxController);
+            $controllerResponse = $this->forward($_ajaxController, $controllerParams, $controllerQuery);
             $responseContent = array(
                 'block' => $controllerResponse->getContent(),
             );
@@ -88,10 +88,11 @@ class AjaxBlockController extends Controller
 
             if (isset($query[$parameterName])) {
                 $parameters[$parameterName] = $query[$parameterName];
+                unset($query[$parameterName]);
             }
         }
 
-        return $parameters;
+        return array($parameters, $query);
     }
 
     /**
