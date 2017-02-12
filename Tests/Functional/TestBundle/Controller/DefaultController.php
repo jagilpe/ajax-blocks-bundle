@@ -51,6 +51,11 @@ class DefaultController extends Controller
         return new Response($html);
     }
 
+    protected function nonPublicAction()
+    {
+        return new Response('Testing block');
+    }
+
     private function getVariables($blockName)
     {
         $controllerName = 'TestBundle:Default:';

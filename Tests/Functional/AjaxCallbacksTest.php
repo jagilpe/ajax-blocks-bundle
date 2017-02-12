@@ -10,6 +10,9 @@
 
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional;
 
+use Jagilpe\AjaxBlocksBundle\Exception\AjaxBlocksErrorCodes;
+use Symfony\Component\BrowserKit\Client;
+
 /**
  * Functional tests for the ajax update responses
  *
@@ -42,7 +45,70 @@ class AjaxCallbacksTest extends WebTestCase
         $this->assertEquals($expectedBlock, $responseContent->block);
     }
 
-    private function getResponseContent($blockController, array $params = array())
+    public function testReturnsErrorForWrongControllerNameFormat()
+    {
+        $blockController = 'RandomString:Testing';
+
+        $expectedError = array(
+            'code' => AjaxBlocksErrorCodes::WRONG_CONTROLLER_NAME,
+            'error' => 'RandomString:Testing is not a correct controller name.',
+        );
+
+        $this->checkErrorResponse($blockController, $expectedError);
+    }
+
+    public function testReturnsErrorForWrongBundle()
+    {
+        $blockController = 'NonExistentBundle:Testing:block';
+
+        $expectedError = array(
+            'code' => AjaxBlocksErrorCodes::BUNDLE_DOES_NOT_EXIST,
+            'error' => 'Bundle "NonExistentBundle" does not exist or is not loaded.',
+        );
+
+        $this->checkErrorResponse($blockController, $expectedError);
+    }
+
+    public function testReturnsErrorForNonExistentControllerClass()
+    {
+        $blockController = 'TestBundle:DoesNotExists:block';
+        $controllerClass = 'Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller\DoesNotExistsController';
+
+        $expectedError = array(
+            'code' => AjaxBlocksErrorCodes::CONTROLLER_CLASS_DOES_NOT_EXISTS,
+            'error' => "Class \"$controllerClass\" does not exist.",
+        );
+
+        $this->checkErrorResponse($blockController, $expectedError);
+    }
+
+    public function testReturnsErrorForNonExistentController()
+    {
+        $blockController = 'TestBundle:Default:doesNotExists';
+        $controllerClass = 'Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller\DefaultController';
+
+        $expectedError = array(
+            'code' => AjaxBlocksErrorCodes::CONTROLLER_CLASS_METHOD_DOES_NOT_EXISTS,
+            'error' => "Class \"$controllerClass\" does not have a method called \"doesNotExistsAction\".",
+        );
+
+        $this->checkErrorResponse($blockController, $expectedError);
+    }
+
+    public function testReturnsErrorForNonPublicController()
+    {
+        $blockController = 'TestBundle:Default:nonPublic';
+        $controllerClass = 'Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller\DefaultController';
+
+        $expectedError = array(
+            'code' => AjaxBlocksErrorCodes::CONTROLLER_IS_NOT_CALLABLE,
+            'error' => "Method \"nonPublicAction\" of class \"$controllerClass\" is not public or is not callable.",
+        );
+
+        $this->checkErrorResponse($blockController, $expectedError);
+    }
+
+    private function getResponseContent($blockController, array $params = array(), Client $client = null)
     {
         $paramString = '';
         foreach ($params as $paramName => $paramValue) {
@@ -52,11 +118,21 @@ class AjaxCallbacksTest extends WebTestCase
 
         $uri = '/jgp-ajax-blocks/ajax-block/'.$blockController.$paramString;
 
-        $client = $this->createClient();
+        $client = $client ? $client : $this->createClient();
         $client->request('GET', $uri);
 
         $rawResponseContent = $client->getResponse()->getContent();
         return json_decode($rawResponseContent);
+    }
+
+    private function checkErrorResponse($blockController, array $expectedError)
+    {
+        $client = $this->createClient();
+        $responseContent = $this->getResponseContent($blockController, array(), $client);
+
+        $this->assertObjectNotHasAttribute('block', $responseContent);
+        $this->assertEquals($expectedError, (array) $responseContent->error);
+        $this->assertEquals(406, $client->getResponse()->getStatusCode());
     }
 
 }
