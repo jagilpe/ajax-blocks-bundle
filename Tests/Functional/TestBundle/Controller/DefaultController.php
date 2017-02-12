@@ -39,6 +39,11 @@ class DefaultController extends Controller
         return new Response('Testing block');
     }
 
+    public function anotherSimpleBlockAction()
+    {
+        return new Response('<div>Another testing block</div>');
+    }
+
     public function blockWithParamsAction($param1, $param2)
     {
         $html = "<span id=\"param1\">$param1</span>";

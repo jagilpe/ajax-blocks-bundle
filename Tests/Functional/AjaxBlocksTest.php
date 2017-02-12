@@ -11,10 +11,9 @@
 namespace Jagilpe\AjaxBlocksBundle\Tests\Functional;
 
 use Jagilpe\AjaxBlocksBundle\Tests\Functional\TestBundle\Controller\DefaultController;
-use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
- * Ajax Blocks functional tests
+ * Ajax Blocks initial block rendering functional tests
  *
  * @author Javier Gil Pereda <javier@gilpereda.com>
  */
@@ -22,9 +21,7 @@ class AjaxBlocksTest extends WebTestCase
 {
     public function testRendersTheContentOfTheBlock()
     {
-        $client = $this->createClient();
-
-        $blockContainer = $this->getRenderedBlockContainer($client, '/index/'.DefaultController::SIMPLE_BLOCK);
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::SIMPLE_BLOCK);
         $blockContent = trim($blockContainer->text());
 
         $this->assertEquals('Testing block', $blockContent);
@@ -32,9 +29,7 @@ class AjaxBlocksTest extends WebTestCase
 
     public function testRendersABlockWithParameters()
     {
-        $client = $this->createClient();
-
-        $blockContainer = $this->getRenderedBlockContainer($client, '/index/'.DefaultController::BLOCK_WITH_PARAMS);
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::BLOCK_WITH_PARAMS);
 
         $param1 = trim($blockContainer->filter('#param1')->first()->html());
         $param2 = trim($blockContainer->filter('#param2')->first()->html());
@@ -43,13 +38,11 @@ class AjaxBlocksTest extends WebTestCase
         $this->assertEquals('second parameter', $param2);
     }
 
-    public function testRendersTheAjaxCallbackUrl()
+    public function testFillsTheAjaxCallbackUrl()
     {
         $params = DefaultController::$params[DefaultController::BLOCK_WITH_PARAMS];
 
-        $client = $this->createClient();
-
-        $blockContainer = $this->getRenderedBlockContainer($client, '/index/'.DefaultController::BLOCK_WITH_PARAMS);
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::BLOCK_WITH_PARAMS);
 
         $ajaxCallbackUrl = $blockContainer->attr('data-src');
 
@@ -61,15 +54,21 @@ class AjaxBlocksTest extends WebTestCase
         foreach ($params as $param => $value) {
             $this->assertEquals($queryParams[$param], $value);
         }
-
     }
 
-    private function getRenderedBlockContainer(Client $client, $url)
+    private function getRenderedBlockContainer($url)
     {
+        $client = $this->createClient();
         $crawler = $client->request('GET', $url);
         return $crawler->filter('[data-target="jgp-ajax-block"]')->first();
     }
 
+    /**
+     * Returns the base url and the query params from a url
+     *
+     * @param $url
+     * @return array
+     */
     private function explodeUrl($url)
     {
         $explodedUrl =  explode('?', $url);
