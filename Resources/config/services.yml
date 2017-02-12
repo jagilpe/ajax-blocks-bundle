@@ -5,3 +5,9 @@ services:
         public: true
         tags:
             - { name: twig.extension }
+
+    # Event listener
+    jgp_ajax_tools.ajax_block_controller_listener:
+        class: Jagilpe\AjaxBlocksBundle\EventListener\AjaxBlockControllerEventListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }

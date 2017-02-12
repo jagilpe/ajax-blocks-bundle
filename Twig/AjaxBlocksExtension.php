@@ -10,6 +10,8 @@
 
 namespace Jagilpe\AjaxBlocksBundle\Twig;
 
+use Jagilpe\AjaxBlocksBundle\EventListener\AjaxBlockControllerEventListener;
+
 /**
  * Twig extension
  *
@@ -48,8 +50,9 @@ class AjaxBlocksExtension extends \Twig_Extension
     public function renderAjaxBlock(\Twig_Environment $environment, $controllerName, array $controllerParams = array())
     {
         $routeParams = array('_ajaxController' => $controllerName) + $controllerParams;
+        $controllerParams[AjaxBlockControllerEventListener::JGP_AJAX_BLOCK_TAG] = true;
+
         $variables = array(
-            'test' => 'test',
             'controllerName' => $controllerName,
             'controllerParams' => $controllerParams,
             'routeName' => 'jgp_ajax_block',

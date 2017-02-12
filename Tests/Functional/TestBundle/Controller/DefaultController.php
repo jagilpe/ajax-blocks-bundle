@@ -23,9 +23,11 @@ class DefaultController extends Controller
 {
     const SIMPLE_BLOCK = 'simple-block';
     const BLOCK_WITH_PARAMS = 'block-with-params';
+    const BLOCK_WITH_QUERY_PARAMS = 'block-with-query-params';
 
     public static $params = array(
-        self::BLOCK_WITH_PARAMS =>array('param1' => 'first parameter', 'param2' => 'second parameter')
+        self::BLOCK_WITH_PARAMS =>array('param1' => 'first parameter', 'param2' => 'second parameter'),
+        self::BLOCK_WITH_QUERY_PARAMS =>array('param1' => 'first parameter', 'param2' => 'second parameter')
     );
 
     public function indexAction($block)
@@ -93,6 +95,12 @@ class DefaultController extends Controller
                 $variables = array(
                     'controllerName' => $controllerName.'blockWithParams',
                     'controllerParams' => self::$params[self::BLOCK_WITH_PARAMS],
+                );
+                break;
+            case self::BLOCK_WITH_QUERY_PARAMS:
+                $variables = array(
+                    'controllerName' => $controllerName.'blockWithQueryParams',
+                    'controllerParams' => self::$params[self::BLOCK_WITH_QUERY_PARAMS],
                 );
                 break;
             default:

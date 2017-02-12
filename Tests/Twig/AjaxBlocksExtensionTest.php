@@ -66,7 +66,11 @@ class AjaxBundleExtensionTest extends TestCase
 
         $expectedVariables = array(
             'controllerName' => 'TestingBundle:Test:block',
-            'controllerParams' => array('param1' => 'parameter 1', 'param2' => 'parameter 2'),
+            'controllerParams' => array(
+                'param1' => 'parameter 1',
+                'param2' => 'parameter 2',
+                '_jgp_ajax_block' => true
+            ),
             'routeName' => 'jgp_ajax_block',
             'routeParams' => array(
                 '_ajaxController' => 'TestingBundle:Test:block',

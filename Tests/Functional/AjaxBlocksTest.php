@@ -27,12 +27,24 @@ class AjaxBlocksTest extends WebTestCase
         $this->assertEquals('Testing block', $blockContent);
     }
 
-    public function testRendersABlockWithParameters()
+    public function testRendersABlockWithUrlParameters()
     {
         $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::BLOCK_WITH_PARAMS);
 
         $param1 = trim($blockContainer->filter('#param1')->first()->html());
         $param2 = trim($blockContainer->filter('#param2')->first()->html());
+
+        $this->assertEquals('first parameter', $param1);
+        $this->assertEquals('second parameter', $param2);
+    }
+
+    public function testReturnsABlockWithQueryParams()
+    {
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::BLOCK_WITH_QUERY_PARAMS);
+
+        $param1 = trim($blockContainer->filter('#param1')->first()->html());
+        $param2 = trim($blockContainer->filter('#param2')->first()->html());
+
 
         $this->assertEquals('first parameter', $param1);
         $this->assertEquals('second parameter', $param2);
