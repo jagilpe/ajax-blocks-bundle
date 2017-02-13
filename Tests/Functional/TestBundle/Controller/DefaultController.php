@@ -85,7 +85,7 @@ class DefaultController extends Controller
     {
         $options = array();
         if ($request && $request->query->get('autoload')) {
-            $options['autoload'] = !!$request->query->get('autoload');
+            $options['autoload'] = $request->query->get('autoload') !== 'false';
         }
 
         $controllerName = 'TestBundle:Default:';

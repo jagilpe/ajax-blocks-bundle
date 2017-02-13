@@ -70,14 +70,14 @@ class AjaxBlocksTest extends WebTestCase
 
     public function testDoesNotAddAutomaticPluginLoadAttribute()
     {
-        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::SIMPLE_BLOCK);
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::SIMPLE_BLOCK.'?autoload=false');
 
         $this->assertNull($blockContainer->attr('data-autoload'));
     }
 
     public function testAddsAutomaticPluginLoadAttribute()
     {
-        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::SIMPLE_BLOCK.'?autoload=true');
+        $blockContainer = $this->getRenderedBlockContainer('/index/'.DefaultController::SIMPLE_BLOCK);
 
         $this->assertNotNull($blockContainer->attr('data-autoload'));
     }

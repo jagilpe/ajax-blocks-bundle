@@ -19,6 +19,10 @@ use Jagilpe\AjaxBlocksBundle\EventListener\AjaxBlockControllerEventListener;
  */
 class AjaxBlocksExtension extends \Twig_Extension
 {
+    private $defaultOptions = array(
+        'autoload' => true,
+    );
+
     /**
      * {@inheritdoc}
      */
@@ -56,6 +60,7 @@ class AjaxBlocksExtension extends \Twig_Extension
     {
         $routeParams = array('_ajaxController' => $controllerName) + $controllerParams;
         $controllerParams[AjaxBlockControllerEventListener::JGP_AJAX_BLOCK_TAG] = true;
+        $options = array_merge($this->defaultOptions, $options);
 
         $variables = array(
             'controllerName' => $controllerName,
