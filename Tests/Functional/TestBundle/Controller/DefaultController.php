@@ -30,9 +30,9 @@ class DefaultController extends Controller
         self::BLOCK_WITH_QUERY_PARAMS =>array('param1' => 'first parameter', 'param2' => 'second parameter')
     );
 
-    public function indexAction($block)
+    public function indexAction(Request $request, $block)
     {
-        $variables = $this->getVariables($block);
+        $variables = $this->getVariables($block, $request);
 
         return $this->render('TestBundle:Default:index.html.twig', $variables);
     }
@@ -81,26 +81,34 @@ class DefaultController extends Controller
         return new Response('Testing block');
     }
 
-    private function getVariables($blockName)
+    private function getVariables($blockName, Request $request = null)
     {
+        $options = array();
+        if ($request && $request->query->get('autoload')) {
+            $options['autoload'] = !!$request->query->get('autoload');
+        }
+
         $controllerName = 'TestBundle:Default:';
         switch ($blockName) {
             case self::SIMPLE_BLOCK:
                 $variables = array(
                     'controllerName' => $controllerName.'simpleBlock',
                     'controllerParams' => array(),
+                    'options' => $options,
                 );
                 break;
             case self::BLOCK_WITH_PARAMS:
                 $variables = array(
                     'controllerName' => $controllerName.'blockWithParams',
                     'controllerParams' => self::$params[self::BLOCK_WITH_PARAMS],
+                    'options' => $options,
                 );
                 break;
             case self::BLOCK_WITH_QUERY_PARAMS:
                 $variables = array(
                     'controllerName' => $controllerName.'blockWithQueryParams',
                     'controllerParams' => self::$params[self::BLOCK_WITH_QUERY_PARAMS],
+                    'options' => $options,
                 );
                 break;
             default:

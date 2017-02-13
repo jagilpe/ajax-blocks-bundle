@@ -131,7 +131,6 @@ describe('Ajax Block jQuery Plugin', function() {
     });
 
     expect(block.html()).toBe(newBlock);
-
   });
 
 });

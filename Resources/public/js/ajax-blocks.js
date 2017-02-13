@@ -79,6 +79,11 @@
         });
       }
     }
-  }
+  };
+
+  // Load the plugin for the ajax blocks in the document
+  $(document).ready(function() {
+    $('[data-target="jgp-ajax-block"][data-autoload]').jgpAjaxBlock();
+  });
 
 })(jQuery, document, window);
