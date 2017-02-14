@@ -4,7 +4,9 @@ AjaxBlocksBundle
 AjaxBlocksBundles is a Symfony bundle that provides an easy way to render in a Twig template blocks that can be updated using ajax requests.
 
 [![Build Status](https://travis-ci.org/jagilpe/ajax-blocks-bundle.svg?branch=master)](https://travis-ci.org/jagilpe/ajax-blocks-bundle)
-[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2.svg?maxAge=2592000)](https://codecov.io/github/dwyl/hapi-auth-jwt2?branch=master)
+[![codecov](https://codecov.io/gh/jagilpe/ajax-blocks-bundle/branch/master/graph/badge.svg)](https://codecov.io/gh/jagilpe/ajax-blocks-bundle)
+[![Latest Stable Version](https://poser.pugx.org/jagilpe/ajax-blocks-bundle/v/stable)](https://packagist.org/packages/jagilpe/ajax-blocks-bundle)
+[![License](https://poser.pugx.org/jagilpe/ajax-blocks-bundle/license)](https://packagist.org/packages/jagilpe/ajax-blocks-bundle)
 
 
 # Installation
