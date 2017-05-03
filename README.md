@@ -42,3 +42,8 @@ If you use assetic to manage the assets:
     {% endjavascripts %}
 {% endblock %}
 ```
+This javascript depends on jQuery, so you have to load it somewhere in the template before this file.
+
+# Usage
+
+

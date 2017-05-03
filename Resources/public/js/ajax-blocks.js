@@ -19,7 +19,8 @@
   var Plugin = function (element, options) {
     this.element = element;
     this.options = {
-      autoload: false
+      autoload: false,
+      onReload: function() {}
     };
 
     this.init(options);
@@ -43,6 +44,7 @@
 
       $.ajax({
         url: this.dataSrc,
+        context: this,
         method: 'GET'
       })
         .done(function(data) {
@@ -51,6 +53,8 @@
 
             $element.empty();
             $element.append(newBlock);
+
+            this.options.onReload(this.element);
           }
         });
     }
