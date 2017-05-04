@@ -26,6 +26,14 @@ class AjaxBlocksExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
+    public function getName()
+    {
+        return 'jagilpe_ajax_blocks_bundle_extension';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         $functions = array();
