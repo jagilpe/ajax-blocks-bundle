@@ -41,6 +41,7 @@
 
     reloadBlock : function() {
       var $element = $(this.element);
+      var plugin = this;
 
       $.ajax({
         url: this.dataSrc,
@@ -54,7 +55,7 @@
             $element.empty();
             $element.append(newBlock);
 
-            this.options.onReload(this.element);
+            plugin.options.onReload(plugin.element);
           }
         });
     }
