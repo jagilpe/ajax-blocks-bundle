@@ -177,3 +177,6 @@ $('[data-target="jgp-ajax-block"]').jgpAjaxBlock({
 });
 ```
 
+# API Reference
+
+http://api.gilpereda.com/ajax-blocks-bundle/master
